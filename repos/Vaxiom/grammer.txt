@@ -1,0 +1,17 @@
+My Grammer 
+Program <- Statement* (0 or more statements if 0 statement )
+Statement <- DECLARE stmt|| assignment stmt || print stmt || input stmt || expression stmt || Loop stmt || IF stmt || Function stmt ;
+DECLARE stmt <-- DECLARE IDENTIFIER :  (STRING || INTEGER || BOOLEAN || CHAR || arraydec);
+arraydec <-- ARRAY [ NUMBER : NUMBER ] OF (STRING || INTEGER || CHAR );
+arrayaccess <-- IDENTIFIER[NUMBER]
+expression <-- TRUE || FALSE ||" StringLiteral " || (IDENTIFIER || arrayaccess || FunctionCALL ((+ || - || * || /) IDENTIFIER || arrayaccess || FunctionCALL)+);
+assignment stmt <-- IDENTIFIER "<--" expression;
+print stmt <-- OUTPUT expression;
+input stmt <-- INPUT expression;
+IF stmt <-- IF CONDITION  THEN Statement* ENDIF;
+For loop <-- FOR IDENTIFIER "<--" NUMBER TO NUMBER statement* NEXT;
+WHILE loop <-- WHILE CONDITION statement* ENDWHILE
+CONDITION <-- expression ((AND || OR || <> || NOT || == || <= || >= || < || > ) expression)+
+
+Functiondec stmt <-- FUNCTION ((IDENTIFIER||arrayaccess (, IDENTIFIER||arrayaccess)*)*  ) statement* ENDFUNCTION;
+FunctionCALL <-- CALL IDENTIFIER((IDENTIFIER||arrayaccess (, IDENTIFIER||arrayaccess)+)+);
