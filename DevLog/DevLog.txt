@@ -1,0 +1,24 @@
+Part 1: Lexer
+
+Date: June 24
+
+Completed:
+- Learned Flex syntax and rules
+- Built lexer for A-Level pseudocode
+- Implemented keywords:
+  IF, ELSE, WHILE, FOR, DECLARE
+- Implemented identifiers
+- Implemented numbers
+
+Challenges:
+- Adapting to C syntax
+- Differentiating keywords and identifiers
+
+Design Decisions:
+- Using A-Level pseudocode as language syntax
+- Keyword lookup table for reserved words
+
+Next:
+- Learn memory/stack/heap
+- Begin parser
+

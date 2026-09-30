@@ -1,0 +1,9 @@
+DECLARE Num : INTEGER
+DECLARE Numbers : ARRAY[1:100] OF INTEGER
+FOR I <-- 1 TO 100
+    INPUT Num
+    IF Num <> ""
+      Numbers[i] <-- Num
+    ENDIF
+NEXT
+3-4
