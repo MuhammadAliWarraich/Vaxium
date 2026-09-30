@@ -1,17 +1,52 @@
-My Grammer 
-Program <- Statement* (0 or more statements if 0 statement )
-Statement <- DECLARE stmt|| assignment stmt || print stmt || input stmt || expression stmt || Loop stmt || IF stmt || Function stmt ;
-DECLARE stmt <-- DECLARE IDENTIFIER :  (STRING || INTEGER || BOOLEAN || CHAR || arraydec);
-arraydec <-- ARRAY [ NUMBER : NUMBER ] OF (STRING || INTEGER || CHAR );
-arrayaccess <-- IDENTIFIER[NUMBER]
-expression <-- TRUE || FALSE ||" StringLiteral " || (IDENTIFIER || arrayaccess || FunctionCALL ((+ || - || * || /) IDENTIFIER || arrayaccess || FunctionCALL)+);
-assignment stmt <-- IDENTIFIER "<--" expression;
-print stmt <-- OUTPUT expression;
-input stmt <-- INPUT expression;
-IF stmt <-- IF CONDITION  THEN Statement* ENDIF;
-For loop <-- FOR IDENTIFIER "<--" NUMBER TO NUMBER statement* NEXT;
-WHILE loop <-- WHILE CONDITION statement* ENDWHILE
-CONDITION <-- expression ((AND || OR || <> || NOT || == || <= || >= || < || > ) expression)+
+Vaxiom grammar
+==============
 
-Functiondec stmt <-- FUNCTION ((IDENTIFIER||arrayaccess (, IDENTIFIER||arrayaccess)*)*  ) statement* ENDFUNCTION;
-FunctionCALL <-- CALL IDENTIFIER((IDENTIFIER||arrayaccess (, IDENTIFIER||arrayaccess)+)+);
+program        -> statement* EOF
+
+statement      -> declaration ";"?
+                | assignment ";"?
+                | input_stmt ";"?
+                | output_stmt ";"?
+                | if_stmt ";"?
+                | for_stmt ";"?
+                | while_stmt ";"?
+                | function_stmt ";"?
+                | expression ";"?
+
+declaration    -> DECLARE IDENTIFIER ":" type
+type           -> scalar_type
+                | ARRAY "[" NUMBER ":" NUMBER "]" OF scalar_type
+scalar_type    -> INTEGER | STRING | BOOLEAN | CHAR
+
+assignment     -> lvalue "<--" expression
+lvalue         -> IDENTIFIER ("[" expression "]")*
+input_stmt     -> INPUT lvalue
+output_stmt    -> OUTPUT expression
+
+if_stmt        -> IF expression THEN? statement*
+                  (ELSE statement*)? ENDIF
+for_stmt       -> FOR IDENTIFIER "<--" expression TO expression
+                  statement* NEXT
+while_stmt     -> WHILE expression DO? statement* ENDWHILE
+
+function_stmt  -> FUNCTION IDENTIFIER "(" parameters? ")"
+                  statement* ENDFUNCTION
+parameters     -> parameter ("," parameter)*
+parameter      -> IDENTIFIER (":" type)?
+
+expression     -> or_expr
+or_expr        -> and_expr (OR and_expr)*
+and_expr       -> equality (AND equality)*
+equality       -> comparison (("=" | "==" | "<>") comparison)*
+comparison     -> term (("<" | "<=" | ">" | ">=") term)*
+term           -> factor (("+" | "-") factor)*
+factor         -> unary (("*" | "/") unary)*
+unary          -> (NOT | "+" | "-") unary | primary
+primary        -> NUMBER | STRING_LITERAL | TRUE | FALSE
+                | lvalue
+                | CALL IDENTIFIER ("(" arguments? ")")?
+                | "(" expression ")"
+arguments      -> expression ("," expression)*
+
+Comments begin with // or # and continue to the end of the line.
+Keywords are case-insensitive. Semicolons are optional.

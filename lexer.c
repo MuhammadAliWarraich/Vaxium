@@ -104,12 +104,6 @@ static char peek(const Lexer *lexer) {
     return at_end(lexer) ? '\0' : lexer->source[lexer->current];
 }
 
-static char peek_next(const Lexer *lexer) {
-    return lexer->current + 1 >= lexer->length
-               ? '\0'
-               : lexer->source[lexer->current + 1];
-}
-
 static char advance(Lexer *lexer) {
     char value = lexer->source[lexer->current++];
     if (value == '\n') {
@@ -461,6 +455,11 @@ void token_array_print(FILE *stream, const TokenArray *tokens) {
     }
     for (size_t i = 0; i < tokens->count; i++) {
         const Token *token = &tokens->items[i];
+        if (token->type == TOK_EOF) {
+            fprintf(stream, "%zu:%zu %s\n", token->line, token->column,
+                    token_type_name(token->type));
+            continue;
+        }
         fprintf(stream, "%zu:%zu %-15s ", token->line, token->column,
                 token_type_name(token->type));
         if (token->type == TOK_STRING) {

@@ -1,0 +1,3 @@
+DECLARE Broken : FLOAT
+IF TRUE THEN
+    OUTPUT "missing ENDIF"

@@ -1,0 +1,24 @@
+# Declarations and operator precedence
+DECLARE Total : INTEGER;
+DECLARE Flags : ARRAY[0:9] OF BOOLEAN
+Total <-- 1 + 2 * 3
+
+IF Total >= 7 AND NOT FALSE THEN
+    OUTPUT "ok"
+ELSE
+    OUTPUT "bad"
+ENDIF
+
+FOR I <-- 0 TO 9
+    Flags[I] <-- TRUE
+NEXT
+
+WHILE Total < 10 DO
+    Total <-- Total + 1
+ENDWHILE
+
+FUNCTION Add(A : INTEGER, B : INTEGER)
+    OUTPUT A + B
+ENDFUNCTION
+
+OUTPUT CALL Add(Total, 2)
